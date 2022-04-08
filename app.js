@@ -20,5 +20,5 @@ mongoose.connection.on('error',(err) => {
 })
 
 app.listen(PORT,()=>{
-	console.log("Running")
+	console.log("Running",PORT)
 })
