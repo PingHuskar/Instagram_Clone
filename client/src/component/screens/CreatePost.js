@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import {Link,useHistory} from 'react-router-dom'
 import M from 'materialize-css'
 const CreatePost = () => {
@@ -7,27 +7,13 @@ const CreatePost = () => {
     const [body,setBody] = useState("")
     const [image,setImage] = useState("")
     const [url,setUrl] = useState("")
-    const postDetails = () => {
-        const data = new FormData()
-        data.append("file",image)
-        data.append("upload_preset","ig-clone")
-        data.append("cloud_name","dvw66rmkw")
-        fetch("https://api.cloudinary.com/v1_1/dvw66rmkw/image/upload",{
-            method:"post",
-            body:data
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data)
-            setUrl(data.url)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
+    useEffect(()=>{
+        if (url) {
         fetch("/createpost",{
             method:"post",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                "Authorization":"Bearer " + localStorage.getItem("jwt")
             },
             body:JSON.stringify({
                 title,
@@ -45,7 +31,25 @@ const CreatePost = () => {
             }
             // console.log(data)
         }).catch(err=>{console.log(err)})
-
+    }
+    },[url])
+    const postDetails = () => {
+        const data = new FormData()
+        data.append("file",image)
+        data.append("upload_preset","ig-clone")
+        data.append("cloud_name","dvw66rmkw")
+        fetch("https://api.cloudinary.com/v1_1/dvw66rmkw/image/upload",{
+            method:"post",
+            body:data
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            setUrl(data.url)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
     }
     return (
         <div className="card input-filled" style={{
