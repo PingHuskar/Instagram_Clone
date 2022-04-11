@@ -32,7 +32,7 @@ const Signup = () => {
                 histort.push('/login')
             }
             // console.log(data)
-        })
+        }).catch(err=>{console.log(err)})
     }
     return (
         <div className="mycard">
