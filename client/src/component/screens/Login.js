@@ -3,7 +3,7 @@ import {useState} from 'react'
 import M from 'materialize-css'
 
 const Login = () => {
-    const histort = useHistory()
+    const history = useHistory()
     const [password,setPassword] = useState("") 
     const [email,setEmail] = useState("")
     const PostData = () => {
@@ -28,7 +28,7 @@ const Login = () => {
             }
             else {
                 M.toast({html: "Login Success",classes:"#4caf50 green"})
-                histort.push('/')
+                history.push('/')
             }
             // console.log(data)
         }).catch(err=>{console.log(err)})
